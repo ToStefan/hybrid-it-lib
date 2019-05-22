@@ -1,45 +1,35 @@
 package hybrid.it.internship.library.entity;
 
+import lombok.Data;
 import lombok.Getter;
+import lombok.NoArgsConstructor;
 import lombok.Setter;
 
 import javax.persistence.*;
+import javax.validation.constraints.NotNull;
 import java.util.HashSet;
 import java.util.Set;
 
+@Data
+@NoArgsConstructor
 @Entity
 @Table(name = "users")
-public class User {
+public class User extends Identifier{
 
-    @Getter @Setter
-    @Id
-    @GeneratedValue(strategy = GenerationType.IDENTITY)
-    @Column(name = "user_id", unique = true, nullable = false)
-    private Long id;
-
-    @Getter @Setter
-    @Column(name = "firstname", nullable = false)
+    @NotNull
     private String firstname;
 
-    @Getter @Setter
-    @Column(name = "lastname", nullable = false)
+    @NotNull
     private String lastname;
 
-    @Getter @Setter
-    @Column(name = "username", nullable = false)
+    @NotNull
     private String username;
 
-    @Getter @Setter
-    @Column(name = "password", nullable = false)
+    @NotNull
     private String password;
-
 
     @ManyToMany(fetch = FetchType.LAZY)
     @JoinTable(name = "user_roles", joinColumns = @JoinColumn(name = "user_id"), inverseJoinColumns = @JoinColumn(name = "role_id"))
     public Set<Role> roles = new HashSet<>();
-
-    public User(){
-
-    }
 
 }

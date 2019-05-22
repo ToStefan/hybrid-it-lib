@@ -1,42 +1,30 @@
 package hybrid.it.internship.library.entity;
 
+import lombok.Data;
 import lombok.Getter;
+import lombok.NoArgsConstructor;
 import lombok.Setter;
 
 import javax.persistence.*;
+import javax.validation.constraints.NotNull;
 import java.util.Date;
 import java.util.HashSet;
 import java.util.Set;
 
+@Data
+@NoArgsConstructor
 @Entity
 @Table(name = "rents")
-public class Rent {
+public class Rent extends Identifier{
 
-    @Getter @Setter
-    @Id
-    @GeneratedValue(strategy = GenerationType.IDENTITY)
-    @Column(name = "rent_id", unique = true, nullable = false)
-    private long id;
-
-    @Getter @Setter
-    @Basic
-    @Temporal(TemporalType.DATE)
-    @Column(name = "rented", unique = false, nullable = false)
+    @NotNull
     private Date rented;
 
-    @Getter @Setter
-    @OneToOne(fetch = FetchType.LAZY, cascade = CascadeType.REFRESH)
-    @JoinColumn(name = "user_id", nullable = false)
+    @ManyToOne(fetch = FetchType.LAZY, cascade = CascadeType.REFRESH)
+    @JoinColumn(name = "user_id", nullable = false, referencedColumnName = "id")
     private User user;
 
-    @Getter @Setter
-    @OneToOne(fetch = FetchType.LAZY, cascade = CascadeType.REFRESH)
-    @JoinColumn(name = "book_id", nullable = false)
+    @ManyToOne(fetch = FetchType.LAZY, cascade = CascadeType.REFRESH)
+    @JoinColumn(name = "book_id", nullable = false, referencedColumnName = "id")
     private Book book;
-
-    public Rent(){
-
-    }
-
-
 }
