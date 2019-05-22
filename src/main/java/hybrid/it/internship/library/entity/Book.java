@@ -21,7 +21,6 @@ public class Book extends Identifier{
     @NotNull
     private Integer totalCopies;
 
-    @NotNull
-    @Column(name = "available_copies")
+    @Column(name = "available_copies", nullable = false)
     private Integer availableCopies;
 }
