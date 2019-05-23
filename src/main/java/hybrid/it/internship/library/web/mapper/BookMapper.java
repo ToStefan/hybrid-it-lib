@@ -13,12 +13,13 @@ public class BookMapper implements Mapper<Book, BookDTO> {
 
     @Override
     public BookDTO toDTO(Book entity) {
-        BookDTO bookDTO = new BookDTO();
-        bookDTO.setId(entity.getId());
-        bookDTO.setAuthor(entity.getAuthor());
-        bookDTO.setTitle(entity.getTitle());
-        bookDTO.setTotalCopies(entity.getTotalCopies());
-        bookDTO.setAvailableCopies(entity.getAvailableCopies());
+        BookDTO bookDTO = BookDTO.builder()
+                .id(entity.getId())
+                .author(entity.getAuthor())
+                .title(entity.getTitle())
+                .totalCopies(entity.getTotalCopies())
+                .availableCopies(entity.getAvailableCopies())
+                .build();
         return bookDTO;
     }
 
@@ -32,14 +33,12 @@ public class BookMapper implements Mapper<Book, BookDTO> {
 
     @Override
     public Book toEntity(BookDTO bookDTO) {
-        Book book = new Book();
-        if(bookDTO.getId() != null){
-            book.setId(bookDTO.getId());
-        }
-        book.setAuthor(bookDTO.getAuthor());
-        book.setTitle(bookDTO.getTitle());
-        book.setTotalCopies(bookDTO.getTotalCopies());
-        book.setAvailableCopies(bookDTO.getAvailableCopies());
+        Book book = Book.builder()
+                .author(bookDTO.getAuthor())
+                .title(bookDTO.getTitle())
+                .totalCopies(bookDTO.getTotalCopies())
+                .availableCopies(bookDTO.getAvailableCopies())
+                .build();
         return book;
     }
 

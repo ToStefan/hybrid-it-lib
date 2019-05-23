@@ -1,5 +1,5 @@
 package hybrid.it.internship.library.service;
 
-public interface IRentService {
+public interface RentService {
     boolean existsByBookId(Long bookId);
 }
