@@ -1,6 +1,7 @@
 package hybrid.it.internship.library.service.impl;
 
 import hybrid.it.internship.library.entity.Book;
+import hybrid.it.internship.library.exceptions.EntityNotFoundException;
 import hybrid.it.internship.library.repository.BookRepository;
 import hybrid.it.internship.library.service.BookService;
 import hybrid.it.internship.library.web.dto.BookDTO;
@@ -40,7 +41,7 @@ public class BookServiceImpl implements BookService {
     @Transactional
     public BookDTO update(Long id, BookDTO bookDTO) {
         final Book book = bookRepository.findById(id)
-                .orElseThrow(IllegalStateException::new);
+                .orElseThrow(() -> new EntityNotFoundException(id));
 
         book.setAuthor(bookDTO.getAuthor());
         book.setTitle(bookDTO.getTitle());

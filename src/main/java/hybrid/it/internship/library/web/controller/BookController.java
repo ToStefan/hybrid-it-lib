@@ -55,11 +55,10 @@ public class BookController {
     @DeleteMapping(value = "/{id}")
     public ResponseEntity<HttpStatus> deleteBook(@PathVariable("id") Long id) {
 
-        if (rentService.existsByBookId(id)) {
+        if (rentService.existsByBookId(id))
             return new ResponseEntity<>(HttpStatus.BAD_REQUEST);
-        } else {
-            bookService.delete(id);
-        }
+
+        bookService.delete(id);
         return new ResponseEntity<>(HttpStatus.OK);
     }
 }
