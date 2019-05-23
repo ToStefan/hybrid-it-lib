@@ -1,16 +1,20 @@
 package hybrid.it.internship.library.entity;
 
 import lombok.*;
-import net.bytebuddy.implementation.bind.annotation.SuperCall;
 
-import javax.persistence.*;
+import javax.persistence.Column;
+import javax.persistence.Entity;
+import javax.persistence.Table;
 import javax.validation.constraints.NotNull;
 
 @Data
+@EqualsAndHashCode(callSuper = true)
+@Builder
 @NoArgsConstructor
+@AllArgsConstructor
 @Entity
 @Table(name = "books")
-public class Book extends Identifier{
+public class Book extends Identifier {
 
     @NotNull
     private String author;
