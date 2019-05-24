@@ -28,7 +28,8 @@ public class BookServiceImpl implements BookService {
     @Override
     @Transactional(readOnly = true)
     public BookDTO getById(Long id) {
-        return bookMapper.toDTO(bookRepository.getOne(id));
+        return bookMapper.toDTO(bookRepository.findById(id)
+                .orElseThrow(() -> new EntityNotFoundException(id.toString())));
     }
 
     @Override
@@ -41,7 +42,7 @@ public class BookServiceImpl implements BookService {
     @Transactional
     public BookDTO update(Long id, BookDTO bookDTO) {
         final Book book = bookRepository.findById(id)
-                .orElseThrow(() -> new EntityNotFoundException(id));
+                .orElseThrow(() -> new EntityNotFoundException(id.toString()));
 
         book.setAuthor(bookDTO.getAuthor());
         book.setTitle(bookDTO.getTitle());
