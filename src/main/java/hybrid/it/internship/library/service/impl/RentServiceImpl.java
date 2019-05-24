@@ -16,4 +16,9 @@ public class RentServiceImpl implements RentService {
     public boolean existsByBookId(Long bookId) {
         return rentRepository.existsByBookId(bookId);
     }
+
+    @Override
+    public boolean existsByUserId(Long userId) {
+        return rentRepository.existsByUserId(userId);
+    }
 }

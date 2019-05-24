@@ -8,5 +8,6 @@ import org.springframework.stereotype.Repository;
 public interface RentRepository extends JpaRepository<Rent, Long> {
 
     boolean existsByBookId(Long id);
+    boolean existsByUserId(Long userId);
 
 }

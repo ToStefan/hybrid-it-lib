@@ -28,7 +28,8 @@ public class BookServiceImpl implements BookService {
     @Override
     @Transactional(readOnly = true)
     public BookDTO getById(Long id) {
-        return bookMapper.toDTO(bookRepository.getOne(id));
+        return bookMapper.toDTO(bookRepository.findById(id)
+                .orElseThrow(() -> new EntityNotFoundException(id)));
     }
 
     @Override
