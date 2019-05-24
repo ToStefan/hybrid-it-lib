@@ -37,24 +37,25 @@ public class UserController {
     @GetMapping(value = "/username/{username}")
     public ResponseEntity<UserDTO> getUserByUsername(@PathVariable("username") String username) {
 
-        UserDTO userDto = userService.getByUsername(username);
+        //UserDTO userDto = userService.getByUsername(username);
 
-        return new ResponseEntity<>(userDto, HttpStatus.OK);
+        //return new ResponseEntity<>(userDto, HttpStatus.OK);
+        return null;
     }
 
-    @PostMapping(value = "/new")
-    public ResponseEntity<UserDTO> newUser(@RequestBody UserDTO userDTO) {
+    @PostMapping
+    public ResponseEntity<UserDTO> create(@RequestBody UserDTO userDTO) {
 
         UserDTO retVal = userService.create(userDTO);
 
         return new ResponseEntity<>(retVal, HttpStatus.OK);
     }
 
-    @PutMapping(value = "/update/{id}")
+    @PutMapping(value = "/{id}")
     public ResponseEntity<UserDTO> updateUser(@PathVariable("id") Long id, @RequestBody UserDTO userDTO) {
 
         if(userService.existsByUsername(userDTO.getUsername()))
-            return new ResponseEntity<>(HttpStatus.BAD_REQUEST);
+            return new ResponseEntity<>(HttpStatus.UNPROCESSABLE_ENTITY);
 
         UserDTO retVal = userService.update(id, userDTO);
         return new ResponseEntity<>(retVal, HttpStatus.OK);
@@ -64,7 +65,7 @@ public class UserController {
     public ResponseEntity<HttpStatus> deleteUser(@PathVariable("id") Long id) {
 
         if (rentService.existsByUserId(id))
-            return new ResponseEntity<>(HttpStatus.BAD_REQUEST);
+            return new ResponseEntity<>(HttpStatus.NOT_FOUND);
 
         userService.delete(id);
         return new ResponseEntity<>(HttpStatus.OK);

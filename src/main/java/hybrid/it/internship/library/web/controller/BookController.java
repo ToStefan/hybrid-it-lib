@@ -34,7 +34,7 @@ public class BookController {
         return new ResponseEntity<>(bookDTO, HttpStatus.OK);
     }
 
-    @PostMapping(value = "/new")
+    @PostMapping
     public ResponseEntity<BookDTO> newBook(@RequestBody BookDTO bookDTO) {
 
         bookDTO.setAvailableCopies(bookDTO.getTotalCopies());
@@ -44,7 +44,7 @@ public class BookController {
         return new ResponseEntity<>(retVal, HttpStatus.OK);
     }
 
-    @PutMapping(value = "/update/{id}")
+    @PutMapping(value = "/{id}")
     public ResponseEntity<BookDTO> updateBook(@PathVariable("id") Long id, @RequestBody BookDTO bookDTO) {
 
         BookDTO retVal = bookService.update(id, bookDTO);
@@ -56,7 +56,7 @@ public class BookController {
     public ResponseEntity<HttpStatus> deleteBook(@PathVariable("id") Long id) {
 
         if (rentService.existsByBookId(id))
-            return new ResponseEntity<>(HttpStatus.BAD_REQUEST);
+            return new ResponseEntity<>(HttpStatus.NOT_FOUND);
 
         bookService.delete(id);
         return new ResponseEntity<>(HttpStatus.OK);

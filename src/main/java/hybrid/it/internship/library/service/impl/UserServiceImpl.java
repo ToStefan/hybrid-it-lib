@@ -1,6 +1,5 @@
 package hybrid.it.internship.library.service.impl;
 
-import hybrid.it.internship.library.entity.Book;
 import hybrid.it.internship.library.entity.User;
 import hybrid.it.internship.library.exceptions.EntityNotFoundException;
 import hybrid.it.internship.library.repository.UserRepository;
@@ -30,13 +29,14 @@ public class UserServiceImpl implements UserService {
     @Transactional(readOnly = true)
     public UserDTO getById(Long id) {
         return userMapper.toDTO(userRepository.findById(id)
-                .orElseThrow(() -> new EntityNotFoundException(id)));
+                .orElseThrow(() -> new EntityNotFoundException(id.toString())));
     }
 
     @Override
     @Transactional(readOnly = true)
     public UserDTO getByUsername(String username) {
-        return userMapper.toDTO(userRepository.findByUsername(username));
+        return userMapper.toDTO(userRepository.findByUsername(username)
+                .orElseThrow(() -> new EntityNotFoundException(username)));
     }
 
     @Override
@@ -49,7 +49,7 @@ public class UserServiceImpl implements UserService {
     @Transactional
     public UserDTO update(Long id, UserDTO userDTO) {
         final User user = userRepository.findById(id)
-                .orElseThrow(() -> new EntityNotFoundException(id));
+                .orElseThrow(() -> new EntityNotFoundException(id.toString()));
 
         user.setFirstname(userDTO.getFirstname());
         user.setLastname(userDTO.getLastname());
