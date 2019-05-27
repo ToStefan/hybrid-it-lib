@@ -6,3 +6,6 @@ spring:
   h2:
     console:
       enabled: true
+
+app:
+  rentPeriodInDays: 5
