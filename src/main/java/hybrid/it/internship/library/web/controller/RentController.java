@@ -1,8 +1,9 @@
 package hybrid.it.internship.library.web.controller;
 
+import hybrid.it.internship.library.entity.MostRentedView;
 import hybrid.it.internship.library.service.impl.RentServiceImpl;
+import hybrid.it.internship.library.web.dto.PageDTO;
 import hybrid.it.internship.library.web.dto.RentDTO;
-import hybrid.it.internship.library.web.dto.RentedBookDTO;
 import lombok.AllArgsConstructor;
 import org.springframework.http.HttpStatus;
 import org.springframework.http.ResponseEntity;
@@ -17,27 +18,26 @@ public class RentController {
 
     private final RentServiceImpl rentService;
 
-    @GetMapping
-    public ResponseEntity<List<RentDTO>> getRents() {
+    @PostMapping(value = "/search")
+    public ResponseEntity<List<RentDTO>> search(@RequestBody PageDTO pageDTO) {
 
-        List<RentDTO> rents = rentService.getAll();
+        List<RentDTO> rents = rentService.getAll(pageDTO);
         return new ResponseEntity<>(rents, HttpStatus.OK);
     }
 
-    @GetMapping(value = "/overdue")
-    public ResponseEntity<List<RentDTO>> getOverdueRents() {
+    @PostMapping(value = "/overdue")
+    public ResponseEntity<List<RentDTO>> getOverdueRents(@RequestBody PageDTO pageDTO) {
 
-        List<RentDTO> rentDTO = rentService.getOverdueRents();
+        List<RentDTO> rentDTO = rentService.getOverdueRents(pageDTO);
         return new ResponseEntity<>(rentDTO, HttpStatus.OK);
-
     }
 
     @GetMapping(value = "/most-rented")
-    public ResponseEntity<List<RentedBookDTO>> getMostRented() {
+    public ResponseEntity<List<MostRentedView>> getMostRented() {
 
-        List<RentedBookDTO> rbdtos = rentService.getMostRented();
-        return new ResponseEntity<>(rbdtos, HttpStatus.OK);
+        List<MostRentedView> mostRentedBooks = rentService.getMostRented();
 
+        return new ResponseEntity<>(mostRentedBooks, HttpStatus.OK);
     }
 
     @GetMapping(value = "/{id}")

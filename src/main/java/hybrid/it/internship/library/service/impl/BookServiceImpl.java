@@ -5,12 +5,14 @@ import hybrid.it.internship.library.exceptions.EntityNotFoundException;
 import hybrid.it.internship.library.repository.BookRepository;
 import hybrid.it.internship.library.service.BookService;
 import hybrid.it.internship.library.web.dto.BookDTO;
+import hybrid.it.internship.library.web.dto.PageDTO;
 import hybrid.it.internship.library.web.mapper.BookMapper;
 import lombok.AllArgsConstructor;
 import org.springframework.stereotype.Service;
 import org.springframework.transaction.annotation.Transactional;
 
 import java.util.List;
+import java.util.stream.Collectors;
 
 @AllArgsConstructor
 @Service
@@ -21,8 +23,11 @@ public class BookServiceImpl implements BookService {
 
     @Override
     @Transactional(readOnly = true)
-    public List<BookDTO> getAll() {
-        return bookMapper.toDTO(bookRepository.findAll());
+    public List<BookDTO> getAll(PageDTO pageDTO) {
+        return bookRepository.findAll(pageDTO.toPageRequest())
+                .get()
+                .map(bookMapper::toDTO)
+                .collect(Collectors.toList());
     }
 
     @Override

@@ -1,13 +1,14 @@
 package hybrid.it.internship.library.service;
 
 
+import hybrid.it.internship.library.web.dto.PageDTO;
 import hybrid.it.internship.library.web.dto.UserDTO;
 
 import java.util.List;
 
 public interface UserService {
 
-    List<UserDTO> getAll();
+    List<UserDTO> getAll(PageDTO pageDTO);
     UserDTO getById(Long id);
     UserDTO getByUsername(String username);
     UserDTO create(UserDTO userDTO);

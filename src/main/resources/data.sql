@@ -1,3 +1,5 @@
+CREATE VIEW most_rented_view AS SELECT books.id as id, books.author as author, books.title as title, COUNT(books.id) as rented_count FROM rents JOIN books ON rents.book_id = books.id GROUP BY books.id ORDER BY books.id DESC;
+
 INSERT INTO USERS(id, firstname, lastname, username, password) VALUES(1, 's', 't', 'Stefan', 'Tofilovic');
 INSERT INTO USERS(id, firstname, lastname, username, password) VALUES(2, 'v', 'n', 'Viktor', 'Nikolic');
 
@@ -13,6 +15,6 @@ INSERT INTO BOOKS(id, author, title, total_copies, available_copies) VALUES(2, '
 INSERT INTO BOOKS(id, author, title, total_copies, available_copies) VALUES(3, 'a3', 't3', 30, 29);
 
 
-INSERT INTO RENTS(id, rent_date, user_id, book_id) VALUES(1, '2019-05-23', 1, 3)
-INSERT INTO RENTS(id, rent_date, user_id, book_id) VALUES(2, '2019-05-23', 2, 3)
-INSERT INTO RENTS(id, rent_date, user_id, book_id) VALUES(3, '2019-05-21', 2, 1)
+INSERT INTO RENTS(id, rent_date, user_id, book_id) VALUES(1, '2019-05-23', 1, 3);
+INSERT INTO RENTS(id, rent_date, user_id, book_id) VALUES(2, '2019-05-23', 2, 3);
+INSERT INTO RENTS(id, rent_date, user_id, book_id) VALUES(3, '2019-05-21', 2, 1);

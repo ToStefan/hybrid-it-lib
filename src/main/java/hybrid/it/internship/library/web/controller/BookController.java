@@ -3,6 +3,7 @@ package hybrid.it.internship.library.web.controller;
 import hybrid.it.internship.library.service.impl.BookServiceImpl;
 import hybrid.it.internship.library.service.impl.RentServiceImpl;
 import hybrid.it.internship.library.web.dto.BookDTO;
+import hybrid.it.internship.library.web.dto.PageDTO;
 import lombok.AllArgsConstructor;
 import org.springframework.http.HttpStatus;
 import org.springframework.http.ResponseEntity;
@@ -18,11 +19,10 @@ public class BookController {
     private final BookServiceImpl bookService;
     private final RentServiceImpl rentService;
 
-    @GetMapping
-    public ResponseEntity<List<BookDTO>> getBooks() {
+    @PostMapping("/search")
+    public ResponseEntity<List<BookDTO>> search(@RequestBody PageDTO pageDTO) {
 
-        List<BookDTO> bookDTOS = bookService.getAll();
-
+        List<BookDTO> bookDTOS = bookService.getAll(pageDTO);
         return new ResponseEntity<>(bookDTOS, HttpStatus.OK);
     }
 
