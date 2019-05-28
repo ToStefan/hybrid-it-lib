@@ -83,7 +83,7 @@ public class RentServiceImpl implements RentService {
     @Transactional(readOnly = true)
     public RentDTO getById(Long id) {
         return rentMapper.toDTO(rentRepository.findById(id)
-                .orElseThrow(EntityNotFoundException::new));
+                .orElseThrow(() -> new EntityNotFoundException(id.toString())));
     }
 
     @Override
