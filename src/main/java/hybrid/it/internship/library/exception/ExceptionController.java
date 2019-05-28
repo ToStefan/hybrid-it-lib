@@ -11,11 +11,10 @@ public class ExceptionController {
     @ExceptionHandler(value = EntityNotFoundException.class)
     @ResponseStatus(HttpStatus.NOT_FOUND)
     public ExceptionResponse handleEntityNotFound(final EntityNotFoundException exception,
-                                                    final HttpServletRequest request) {
+                                                  final HttpServletRequest request) {
         ExceptionResponse error = new ExceptionResponse();
         error.setErrorMessage(exception.getMessage());
         error.setRequestedURI(request.getRequestURI());
-        error.setStatus(404);
 
         return error;
     }
@@ -27,7 +26,6 @@ public class ExceptionController {
         ExceptionResponse error = new ExceptionResponse();
         error.setErrorMessage(exception.getMessage());
         error.setRequestedURI(request.getRequestURI());
-        error.setStatus(500);
 
         return error;
     }

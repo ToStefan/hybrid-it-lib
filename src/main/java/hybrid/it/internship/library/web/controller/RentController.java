@@ -36,7 +36,6 @@ public class RentController {
     public ResponseEntity<List<MostRentedView>> getMostRented() {
 
         List<MostRentedView> mostRentedBooks = rentService.getMostRented();
-
         return new ResponseEntity<>(mostRentedBooks, HttpStatus.OK);
     }
 
