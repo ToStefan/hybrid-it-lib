@@ -7,6 +7,7 @@ import hybrid.it.internship.library.web.dto.RentDTO;
 import lombok.AllArgsConstructor;
 import org.springframework.http.HttpStatus;
 import org.springframework.http.ResponseEntity;
+import org.springframework.security.access.prepost.PreAuthorize;
 import org.springframework.web.bind.annotation.*;
 
 import java.util.List;
@@ -18,6 +19,7 @@ public class RentController {
 
     private final RentServiceImpl rentService;
 
+    @PreAuthorize("hasRole('USER')")
     @PostMapping(value = "/search")
     public ResponseEntity<List<RentDTO>> search(@RequestBody PageDTO pageDTO) {
 
@@ -25,6 +27,7 @@ public class RentController {
         return new ResponseEntity<>(rents, HttpStatus.OK);
     }
 
+    @PreAuthorize("hasRole('ADMINISTRATOR')")
     @PostMapping(value = "/overdue")
     public ResponseEntity<List<RentDTO>> getOverdueRents(@RequestBody PageDTO pageDTO) {
 
@@ -32,6 +35,7 @@ public class RentController {
         return new ResponseEntity<>(rentDTO, HttpStatus.OK);
     }
 
+    @PreAuthorize("hasRole('ADMINISTRATOR')")
     @GetMapping(value = "/most-rented")
     public ResponseEntity<List<MostRentedView>> getMostRented() {
 
@@ -46,6 +50,7 @@ public class RentController {
         return new ResponseEntity<>(rentDTO, HttpStatus.OK);
     }
 
+    @PreAuthorize("hasRole('USER')")
     @GetMapping(value = "/book/{id}")
     public ResponseEntity<List<RentDTO>> getRentByBookId(@PathVariable("id") Long id) {
 
@@ -53,6 +58,7 @@ public class RentController {
         return new ResponseEntity<>(rentDTO, HttpStatus.OK);
     }
 
+    @PreAuthorize("hasRole('USER')")
     @GetMapping(value = "/user/{id}")
     public ResponseEntity<List<RentDTO>> getRentByUserId(@PathVariable("id") Long id) {
 
@@ -60,6 +66,7 @@ public class RentController {
         return new ResponseEntity<>(rentDTO, HttpStatus.OK);
     }
 
+    @PreAuthorize("hasRole('USER')")
     @PostMapping
     public ResponseEntity<RentDTO> create(@RequestBody RentDTO rentDTO) {
 
@@ -67,6 +74,7 @@ public class RentController {
         return new ResponseEntity<>(retVal, HttpStatus.OK);
     }
 
+    @PreAuthorize("hasRole('ADMINISTRATOR')")
     @DeleteMapping(value = "/{id}")
     public ResponseEntity<HttpStatus> deleteRent(@PathVariable("id") Long id) {
 

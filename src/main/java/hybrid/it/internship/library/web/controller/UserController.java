@@ -7,10 +7,12 @@ import hybrid.it.internship.library.web.dto.UserDTO;
 import lombok.AllArgsConstructor;
 import org.springframework.http.HttpStatus;
 import org.springframework.http.ResponseEntity;
+import org.springframework.security.access.prepost.PreAuthorize;
 import org.springframework.web.bind.annotation.*;
 
 import java.util.List;
 
+@PreAuthorize("hasRole('ADMINISTRATOR')")
 @AllArgsConstructor
 @RestController
 @RequestMapping(value = "/api/user")

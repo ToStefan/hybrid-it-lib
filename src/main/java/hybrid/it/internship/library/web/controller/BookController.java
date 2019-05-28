@@ -7,6 +7,7 @@ import hybrid.it.internship.library.web.dto.PageDTO;
 import lombok.AllArgsConstructor;
 import org.springframework.http.HttpStatus;
 import org.springframework.http.ResponseEntity;
+import org.springframework.security.access.prepost.PreAuthorize;
 import org.springframework.web.bind.annotation.*;
 
 import java.util.List;
@@ -19,6 +20,8 @@ public class BookController {
     private final BookServiceImpl bookService;
     private final RentServiceImpl rentService;
 
+
+    @PreAuthorize("hasRole('USER')")
     @PostMapping("/search")
     public ResponseEntity<List<BookDTO>> search(@RequestBody PageDTO pageDTO) {
 
@@ -26,6 +29,7 @@ public class BookController {
         return new ResponseEntity<>(bookDTOS, HttpStatus.OK);
     }
 
+    @PreAuthorize("hasRole('USER')")
     @GetMapping(value = "/{id}")
     public ResponseEntity<BookDTO> getBookById(@PathVariable("id") Long id) {
 
@@ -33,6 +37,7 @@ public class BookController {
         return new ResponseEntity<>(bookDTO, HttpStatus.OK);
     }
 
+    @PreAuthorize("hasRole('ADMINISTRATOR')")
     @PostMapping
     public ResponseEntity<BookDTO> newBook(@RequestBody BookDTO bookDTO) {
 
@@ -41,6 +46,7 @@ public class BookController {
         return new ResponseEntity<>(retVal, HttpStatus.OK);
     }
 
+    @PreAuthorize("hasRole('ADMINISTRATOR')")
     @PutMapping(value = "/{id}")
     public ResponseEntity<BookDTO> updateBook(@PathVariable("id") Long id, @RequestBody BookDTO bookDTO) {
 
@@ -48,6 +54,7 @@ public class BookController {
         return new ResponseEntity<>(retVal, HttpStatus.OK);
     }
 
+    @PreAuthorize("hasRole('ADMINISTRATOR')")
     @DeleteMapping(value = "/{id}")
     public ResponseEntity<HttpStatus> deleteBook(@PathVariable("id") Long id) {
 
