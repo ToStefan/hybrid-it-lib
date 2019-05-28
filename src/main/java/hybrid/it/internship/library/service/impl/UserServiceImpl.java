@@ -1,9 +1,10 @@
 package hybrid.it.internship.library.service.impl;
 
 import hybrid.it.internship.library.entity.User;
-import hybrid.it.internship.library.exceptions.EntityNotFoundException;
+import hybrid.it.internship.library.exception.EntityNotFoundException;
 import hybrid.it.internship.library.repository.UserRepository;
 import hybrid.it.internship.library.service.UserService;
+import hybrid.it.internship.library.web.dto.PageDTO;
 import hybrid.it.internship.library.web.dto.UserDTO;
 import hybrid.it.internship.library.web.mapper.UserMapper;
 import lombok.AllArgsConstructor;
@@ -11,6 +12,7 @@ import org.springframework.stereotype.Service;
 import org.springframework.transaction.annotation.Transactional;
 
 import java.util.List;
+import java.util.stream.Collectors;
 
 @AllArgsConstructor
 @Service
@@ -21,8 +23,11 @@ public class UserServiceImpl implements UserService {
 
     @Override
     @Transactional(readOnly = true)
-    public List<UserDTO> getAll() {
-        return userMapper.toDTO(userRepository.findAll());
+    public List<UserDTO> getAll(PageDTO pageDTO) {
+        return userRepository.findAll(pageDTO.toPageRequest())
+                .get()
+                .map(userMapper::toDTO)
+                .collect(Collectors.toList());
     }
 
     @Override
