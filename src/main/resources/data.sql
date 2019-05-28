@@ -9,7 +9,6 @@ INSERT INTO ROLES(id, name) VALUES (2, 'USER');
 INSERT INTO USER_ROLES(user_id, role_id) VALUES(1, 1);
 INSERT INTO USER_ROLES(user_id, role_id) VALUES(2, 2);
 
-
 INSERT INTO BOOKS(id, author, title, total_copies, available_copies) VALUES(1, 'a1', 't1', 10, 8);
 INSERT INTO BOOKS(id, author, title, total_copies, available_copies) VALUES(2, 'a2', 't2', 20, 20);
 INSERT INTO BOOKS(id, author, title, total_copies, available_copies) VALUES(3, 'a3', 't3', 30, 29);

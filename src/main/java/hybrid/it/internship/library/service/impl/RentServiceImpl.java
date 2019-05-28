@@ -1,7 +1,7 @@
 package hybrid.it.internship.library.service.impl;
 
 import hybrid.it.internship.library.entity.MostRentedView;
-import hybrid.it.internship.library.exceptions.EntityNotFoundException;
+import hybrid.it.internship.library.exception.EntityNotFoundException;
 import hybrid.it.internship.library.repository.BookRepository;
 import hybrid.it.internship.library.repository.MostRentedRepository;
 import hybrid.it.internship.library.repository.RentRepository;
@@ -83,7 +83,7 @@ public class RentServiceImpl implements RentService {
     @Transactional(readOnly = true)
     public RentDTO getById(Long id) {
         return rentMapper.toDTO(rentRepository.findById(id)
-                .orElseThrow(() -> new EntityNotFoundException(id.toString())));
+                .orElseThrow(EntityNotFoundException::new));
     }
 
     @Override

@@ -30,7 +30,6 @@ public class BookController {
     public ResponseEntity<BookDTO> getBookById(@PathVariable("id") Long id) {
 
         BookDTO bookDTO = bookService.getById(id);
-
         return new ResponseEntity<>(bookDTO, HttpStatus.OK);
     }
 
@@ -38,9 +37,7 @@ public class BookController {
     public ResponseEntity<BookDTO> newBook(@RequestBody BookDTO bookDTO) {
 
         bookDTO.setAvailableCopies(bookDTO.getTotalCopies());
-
         BookDTO retVal = bookService.create(bookDTO);
-
         return new ResponseEntity<>(retVal, HttpStatus.OK);
     }
 
@@ -48,7 +45,6 @@ public class BookController {
     public ResponseEntity<BookDTO> updateBook(@PathVariable("id") Long id, @RequestBody BookDTO bookDTO) {
 
         BookDTO retVal = bookService.update(id, bookDTO);
-
         return new ResponseEntity<>(retVal, HttpStatus.OK);
     }
 

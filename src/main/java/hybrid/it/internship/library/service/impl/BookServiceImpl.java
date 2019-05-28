@@ -1,7 +1,7 @@
 package hybrid.it.internship.library.service.impl;
 
 import hybrid.it.internship.library.entity.Book;
-import hybrid.it.internship.library.exceptions.EntityNotFoundException;
+import hybrid.it.internship.library.exception.EntityNotFoundException;
 import hybrid.it.internship.library.repository.BookRepository;
 import hybrid.it.internship.library.service.BookService;
 import hybrid.it.internship.library.web.dto.BookDTO;
@@ -34,7 +34,7 @@ public class BookServiceImpl implements BookService {
     @Transactional(readOnly = true)
     public BookDTO getById(Long id) {
         return bookMapper.toDTO(bookRepository.findById(id)
-                .orElseThrow(() -> new EntityNotFoundException(id.toString())));
+                .orElseThrow(() -> new EntityNotFoundException()));
     }
 
     @Override
@@ -47,7 +47,7 @@ public class BookServiceImpl implements BookService {
     @Transactional
     public BookDTO update(Long id, BookDTO bookDTO) {
         final Book book = bookRepository.findById(id)
-                .orElseThrow(() -> new EntityNotFoundException(id.toString()));
+                .orElseThrow(() -> new EntityNotFoundException());
 
         book.setAuthor(bookDTO.getAuthor());
         book.setTitle(bookDTO.getTitle());
