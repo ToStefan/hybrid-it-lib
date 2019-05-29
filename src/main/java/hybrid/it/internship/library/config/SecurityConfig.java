@@ -1,6 +1,5 @@
 package hybrid.it.internship.library.config;
 
-import hybrid.it.internship.library.security.AuthenticationEntryPoint;
 import hybrid.it.internship.library.security.CustomUserDetailsService;
 import lombok.AllArgsConstructor;
 import org.springframework.context.annotation.Bean;
@@ -21,16 +20,9 @@ public class SecurityConfig extends WebSecurityConfigurerAdapter {
     private final CustomUserDetailsService customUserDetailsService;
 
     @Bean
-    public AuthenticationEntryPoint getBasicAuthEntryPoint() {
-        return new AuthenticationEntryPoint();
-    }
-
-    @Bean
     public PasswordEncoder passwordEncoder() {
         return new BCryptPasswordEncoder();
     }
-
-    private static String REALM = "HYBRID_REALM";
 
     @Override
     protected void configure(HttpSecurity http) throws Exception {
@@ -39,8 +31,7 @@ public class SecurityConfig extends WebSecurityConfigurerAdapter {
                 .authorizeRequests()
                 .anyRequest().authenticated()
                 .and()
-                .httpBasic()
-                .realmName(REALM).authenticationEntryPoint(getBasicAuthEntryPoint());
+                .httpBasic();
     }
 
     public void configureGlobalSecurity(AuthenticationManagerBuilder auth) throws Exception {
