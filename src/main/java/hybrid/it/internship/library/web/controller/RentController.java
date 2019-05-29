@@ -43,6 +43,7 @@ public class RentController {
         return new ResponseEntity<>(mostRentedBooks, HttpStatus.OK);
     }
 
+    @PreAuthorize("hasRole('USER')")
     @GetMapping(value = "/{id}")
     public ResponseEntity<RentDTO> getRentById(@PathVariable("id") Long id) {
 
