@@ -23,11 +23,7 @@ public class UserServiceImpl implements UserService {
 
     private final UserRepository userRepository;
     private final UserMapper userMapper;
-
-    @Bean
-    public PasswordEncoder pwEncoder() {
-        return new BCryptPasswordEncoder();
-    }
+    private final PasswordEncoder passwordEncoder;
 
     @Override
     @Transactional(readOnly = true)
@@ -56,7 +52,7 @@ public class UserServiceImpl implements UserService {
     @Transactional
     public UserDTO create(UserDTO userDTO) {
 
-        userDTO.setPassword(pwEncoder().encode(userDTO.getPassword()));
+        userDTO.setPassword(passwordEncoder.encode(userDTO.getPassword()));
 
         return userMapper.toDTO(userRepository.save(userMapper.toEntity(userDTO)));
     }

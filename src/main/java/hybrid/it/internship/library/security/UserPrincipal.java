@@ -15,6 +15,12 @@ public class UserPrincipal implements UserDetails {
     private final String password;
     private final List<GrantedAuthority> roles;
 
+    public UserPrincipal(String username, String password, List<GrantedAuthority> roles) {
+        this.username = username;
+        this.password = password;
+        this.roles = roles;
+    }
+
     public static UserPrincipal create(User user) {
         List<GrantedAuthority> authorities = user.getRoles()
                 .stream()
@@ -26,12 +32,6 @@ public class UserPrincipal implements UserDetails {
                 user.getPassword(),
                 authorities
         );
-    }
-
-    public UserPrincipal(String username, String password, List<GrantedAuthority> roles) {
-        this.username = username;
-        this.password = password;
-        this.roles = roles;
     }
 
     @Override

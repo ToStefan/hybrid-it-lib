@@ -6,7 +6,6 @@ import org.springframework.security.web.authentication.www.BasicAuthenticationEn
 import javax.servlet.http.HttpServletRequest;
 import javax.servlet.http.HttpServletResponse;
 import java.io.IOException;
-import java.io.PrintWriter;
 
 public class AuthenticationEntryPoint extends BasicAuthenticationEntryPoint {
 
@@ -17,9 +16,6 @@ public class AuthenticationEntryPoint extends BasicAuthenticationEntryPoint {
 
         response.setStatus(HttpServletResponse.SC_UNAUTHORIZED);
         response.addHeader("WWW-Authenticate", "Basic realm=" + getRealmName() + "");
-
-        PrintWriter writer = response.getWriter();
-        writer.println("HTTP Status 401 : " + authException.getMessage());
     }
 
     @Override
