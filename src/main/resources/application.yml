@@ -11,3 +11,6 @@ spring:
 
 app:
   rentPeriodInDays: 14
+
+logging:
+  file: logs/hybrid-log.log
