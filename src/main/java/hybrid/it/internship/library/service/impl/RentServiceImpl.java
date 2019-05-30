@@ -1,5 +1,6 @@
 package hybrid.it.internship.library.service.impl;
 
+import hybrid.it.internship.library.entity.Book;
 import hybrid.it.internship.library.entity.MostRentedView;
 import hybrid.it.internship.library.exception.EntityNotFoundException;
 import hybrid.it.internship.library.repository.BookRepository;
@@ -9,14 +10,17 @@ import hybrid.it.internship.library.service.RentService;
 import hybrid.it.internship.library.web.dto.PageDTO;
 import hybrid.it.internship.library.web.dto.RentDTO;
 import hybrid.it.internship.library.web.mapper.RentMapper;
+import lombok.extern.slf4j.Slf4j;
 import org.springframework.beans.factory.annotation.Value;
 import org.springframework.stereotype.Service;
 import org.springframework.transaction.annotation.Transactional;
 
 import java.time.LocalDateTime;
 import java.util.List;
+import java.util.Optional;
 import java.util.stream.Collectors;
 
+@Slf4j
 @Service
 public class RentServiceImpl implements RentService {
 
@@ -101,7 +105,18 @@ public class RentServiceImpl implements RentService {
     @Override
     @Transactional
     public RentDTO create(RentDTO rentDTO) {
-        return rentMapper.toDTO(rentRepository.save(rentMapper.toEntity(rentDTO)));
+
+        RentDTO rentDto = rentMapper.toDTO(rentRepository.save(rentMapper.toEntity(rentDTO)));
+
+        Optional<Book> book = bookRepository.findById(rentDTO.getBookId());
+        if (book.get().getTotalCopies() > 0) {
+            book.get().setTotalCopies(book.get().getTotalCopies() - 1);
+            bookRepository.save(book.get());
+        }
+
+        log.info("User  with ID: " + rentDTO.getUserId() + " rented book with ID: " + rentDTO.getBookId());
+
+        return rentDto;
     }
 
     @Override

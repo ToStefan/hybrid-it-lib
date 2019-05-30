@@ -1,12 +1,13 @@
 CREATE VIEW most_rented_view AS SELECT books.id as id, books.author as author, books.title as title, COUNT(books.id) as rented_count FROM rents JOIN books ON rents.book_id = books.id GROUP BY books.id ORDER BY books.id DESC;
 
-INSERT INTO USERS(id, firstname, lastname, username, password) VALUES(1, 's', 't', 'Stefan', 'Tofilovic');
-INSERT INTO USERS(id, firstname, lastname, username, password) VALUES(2, 'v', 'n', 'Viktor', 'Nikolic');
+INSERT INTO USERS(id, username, password, firstname, lastname) VALUES(1, 's', '$2a$10$qzTe6SMMLC29LXs3mTCE.uUAgWm4qmkhu4sOcjdy4IrevomZHpMMq', 'Stefan', 'Tofilovic');
+INSERT INTO USERS(id, username, password, firstname, lastname) VALUES(2, 'v', '$2a$10$LcQfIdi0rTz0/YheLBPpKOQ77bj77P2EMWy9O1F6lJa0vM1eg7qXW', 'Viktor', 'Nikolic');
 
-INSERT INTO ROLES(id, name) VALUES (1, 'ADMINISTRATOR');
-INSERT INTO ROLES(id, name) VALUES (2, 'USER');
+INSERT INTO ROLES(id, name) VALUES (1, 'ROLE_ADMINISTRATOR');
+INSERT INTO ROLES(id, name) VALUES (2, 'ROLE_USER');
 
 INSERT INTO USER_ROLES(user_id, role_id) VALUES(1, 1);
+INSERT INTO USER_ROLES(user_id, role_id) VALUES(1, 2);
 INSERT INTO USER_ROLES(user_id, role_id) VALUES(2, 2);
 
 INSERT INTO BOOKS(id, author, title, total_copies, available_copies) VALUES(1, 'a1', 't1', 10, 8);

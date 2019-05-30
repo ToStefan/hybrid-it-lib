@@ -8,6 +8,9 @@ import hybrid.it.internship.library.web.dto.PageDTO;
 import hybrid.it.internship.library.web.dto.UserDTO;
 import hybrid.it.internship.library.web.mapper.UserMapper;
 import lombok.AllArgsConstructor;
+import org.springframework.context.annotation.Bean;
+import org.springframework.security.crypto.bcrypt.BCryptPasswordEncoder;
+import org.springframework.security.crypto.password.PasswordEncoder;
 import org.springframework.stereotype.Service;
 import org.springframework.transaction.annotation.Transactional;
 
@@ -20,6 +23,7 @@ public class UserServiceImpl implements UserService {
 
     private final UserRepository userRepository;
     private final UserMapper userMapper;
+    private final PasswordEncoder passwordEncoder;
 
     @Override
     @Transactional(readOnly = true)
@@ -47,6 +51,9 @@ public class UserServiceImpl implements UserService {
     @Override
     @Transactional
     public UserDTO create(UserDTO userDTO) {
+
+        userDTO.setPassword(passwordEncoder.encode(userDTO.getPassword()));
+
         return userMapper.toDTO(userRepository.save(userMapper.toEntity(userDTO)));
     }
 
