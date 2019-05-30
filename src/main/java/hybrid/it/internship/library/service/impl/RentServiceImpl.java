@@ -10,8 +10,7 @@ import hybrid.it.internship.library.service.RentService;
 import hybrid.it.internship.library.web.dto.PageDTO;
 import hybrid.it.internship.library.web.dto.RentDTO;
 import hybrid.it.internship.library.web.mapper.RentMapper;
-import org.slf4j.Logger;
-import org.slf4j.LoggerFactory;
+import lombok.extern.slf4j.Slf4j;
 import org.springframework.beans.factory.annotation.Value;
 import org.springframework.stereotype.Service;
 import org.springframework.transaction.annotation.Transactional;
@@ -21,10 +20,9 @@ import java.util.List;
 import java.util.Optional;
 import java.util.stream.Collectors;
 
+@Slf4j
 @Service
 public class RentServiceImpl implements RentService {
-
-    private final Logger logger = LoggerFactory.getLogger(this.getClass());
 
     private final RentRepository rentRepository;
     private final RentMapper rentMapper;
@@ -111,12 +109,12 @@ public class RentServiceImpl implements RentService {
         RentDTO rentDto = rentMapper.toDTO(rentRepository.save(rentMapper.toEntity(rentDTO)));
 
         Optional<Book> book = bookRepository.findById(rentDTO.getBookId());
-        if(book.get().getTotalCopies() > 0 ){
+        if (book.get().getTotalCopies() > 0) {
             book.get().setTotalCopies(book.get().getTotalCopies() - 1);
             bookRepository.save(book.get());
         }
 
-        logger.info("User  with ID: " + rentDTO.getUserId() + " rented book with ID: " + rentDTO.getBookId());
+        log.info("User  with ID: " + rentDTO.getUserId() + " rented book with ID: " + rentDTO.getBookId());
 
         return rentDto;
     }

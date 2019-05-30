@@ -1,8 +1,6 @@
 package hybrid.it.internship.library.security;
 
 import hybrid.it.internship.library.entity.User;
-import org.slf4j.Logger;
-import org.slf4j.LoggerFactory;
 import org.springframework.security.core.GrantedAuthority;
 import org.springframework.security.core.authority.SimpleGrantedAuthority;
 import org.springframework.security.core.userdetails.UserDetails;
@@ -12,8 +10,6 @@ import java.util.List;
 import java.util.stream.Collectors;
 
 public class UserPrincipal implements UserDetails {
-
-    private final Logger logger = LoggerFactory.getLogger(this.getClass());
 
     private final String username;
     private final String password;

@@ -8,12 +8,14 @@ import hybrid.it.internship.library.web.dto.BookDTO;
 import hybrid.it.internship.library.web.dto.PageDTO;
 import hybrid.it.internship.library.web.mapper.BookMapper;
 import lombok.AllArgsConstructor;
+import lombok.extern.slf4j.Slf4j;
 import org.springframework.stereotype.Service;
 import org.springframework.transaction.annotation.Transactional;
 
 import java.util.List;
 import java.util.stream.Collectors;
 
+@Slf4j
 @AllArgsConstructor
 @Service
 public class BookServiceImpl implements BookService {
@@ -33,6 +35,9 @@ public class BookServiceImpl implements BookService {
     @Override
     @Transactional(readOnly = true)
     public BookDTO getById(Long id) {
+
+        log.info("BookServiceImpl -> getById, ID: " + id.toString());
+
         return bookMapper.toDTO(bookRepository.findById(id)
                 .orElseThrow(() -> new EntityNotFoundException(id.toString())));
     }
