@@ -10,4 +10,4 @@ spring:
       enabled: true
 
 app:
-  rentPeriodInDays: 14
+  rentPeriodInDays: 7
