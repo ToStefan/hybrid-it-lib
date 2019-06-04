@@ -60,8 +60,8 @@ public class IntegrationControllerTest {
 
         LocalDateTime ldt = LocalDateTime.now();
         RentDTO rentDto = RentDTO.builder()
-                .userId((long) 1)
-                .bookId((long) 2)
+                .userId(1L)
+                .bookId(2L)
                 .rentDate(ldt)
                 .build();
 

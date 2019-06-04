@@ -26,7 +26,7 @@ import static org.mockito.Mockito.doReturn;
 @SpringBootTest
 public class BookServiceTest {
 
-    private static PageDTO pageDto = new PageDTO(1, 1);
+    private PageDTO pageDto = new PageDTO(1, 1);
 
     @Mock
     private BookRepository bookRepository;
