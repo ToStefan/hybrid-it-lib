@@ -21,7 +21,7 @@ public class RentScheduler {
     private final RentServiceImpl rentService;
     private final ObjectMapper objectMapper;
 
-    @Scheduled(cron = "0 41 13 ? * MON,TUE,WED,THU,FRI")
+    @Scheduled(cron = "0 0 10 ? * MON,TUE,WED,THU,FRI")
     public void rentOverdueScheduler() throws IOException {
 
         List<RentDTO> overdue = rentService.getOverdueRents(new PageDTO(1, 1));
