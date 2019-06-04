@@ -2,6 +2,7 @@ package hybrid.it.internship.library.service.impl;
 
 import hybrid.it.internship.library.entity.Book;
 import hybrid.it.internship.library.entity.MostRentedView;
+import hybrid.it.internship.library.entity.Rent;
 import hybrid.it.internship.library.exception.EntityNotFoundException;
 import hybrid.it.internship.library.repository.BookRepository;
 import hybrid.it.internship.library.repository.MostRentedRepository;
@@ -28,6 +29,8 @@ public class RentServiceImpl implements RentService {
     private final RentMapper rentMapper;
     private final BookRepository bookRepository;
     private final MostRentedRepository mostRentedRep;
+    private Rent entity;
+    private Rent save;
 
     public RentServiceImpl(RentRepository rentRepository, RentMapper rentMapper, BookRepository bookRepository,
                            MostRentedRepository mostRentedRep) {
@@ -108,10 +111,11 @@ public class RentServiceImpl implements RentService {
 
         RentDTO rentDto = rentMapper.toDTO(rentRepository.save(rentMapper.toEntity(rentDTO)));
 
-        Optional<Book> book = bookRepository.findById(rentDTO.getBookId());
-        if (book.get().getTotalCopies() > 0) {
-            book.get().setTotalCopies(book.get().getTotalCopies() - 1);
-            bookRepository.save(book.get());
+        Book book = bookRepository.findById(rentDTO.getBookId())
+                .orElseThrow(() -> new EntityNotFoundException(rentDTO.getBookId().toString()));
+        if (book.getAvailableCopies() > 0) {
+            book.setAvailableCopies(book.getAvailableCopies() - 1);
+            bookRepository.save(book);
         }
 
         log.info("User  with ID: " + rentDTO.getUserId() + " rented book with ID: " + rentDTO.getBookId());

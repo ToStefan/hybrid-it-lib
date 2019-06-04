@@ -1,4 +1,4 @@
-package hybrid.it.internship.library.service;
+package hybrid.it.internship.library.unit;
 
 import hybrid.it.internship.library.entity.Book;
 import hybrid.it.internship.library.repository.BookRepository;
@@ -10,6 +10,7 @@ import org.junit.runner.RunWith;
 import org.mockito.InjectMocks;
 import org.mockito.Mock;
 import org.mockito.junit.MockitoJUnitRunner;
+import org.springframework.boot.test.context.SpringBootTest;
 import org.springframework.data.domain.Page;
 import org.springframework.data.domain.PageImpl;
 import org.springframework.data.domain.Pageable;
@@ -22,6 +23,7 @@ import static org.mockito.ArgumentMatchers.any;
 import static org.mockito.Mockito.doReturn;
 
 @RunWith(MockitoJUnitRunner.class)
+@SpringBootTest
 public class BookServiceTest {
 
     private static PageDTO pageDto = new PageDTO(1, 1);

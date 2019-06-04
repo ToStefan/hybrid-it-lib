@@ -1,6 +1,9 @@
 package hybrid.it.internship.library.web.mapper;
 
 import hybrid.it.internship.library.entity.Rent;
+import hybrid.it.internship.library.exception.EntityNotFoundException;
+import hybrid.it.internship.library.repository.BookRepository;
+import hybrid.it.internship.library.repository.UserRepository;
 import hybrid.it.internship.library.service.BookService;
 import hybrid.it.internship.library.service.UserService;
 import hybrid.it.internship.library.web.dto.RentDTO;
@@ -15,10 +18,8 @@ import java.util.stream.Collectors;
 @Component
 public class RentMapper implements Mapper<Rent, RentDTO> {
 
-    private final UserService userService;
-    private final BookService bookService;
-    private final UserMapper userMapper;
-    private final BookMapper bookMapper;
+    private final UserRepository userRepository;
+    private final BookRepository bookRepository;
 
     @Override
     public RentDTO toDTO(Rent entity) {
@@ -43,8 +44,8 @@ public class RentMapper implements Mapper<Rent, RentDTO> {
     public Rent toEntity(RentDTO rentDTO) {
         Rent rent = Rent.builder()
                 .rentDate(rentDTO.getRentDate())
-                .user(userMapper.toEntity(userService.getById(rentDTO.getUserId())))
-                .book(bookMapper.toEntity(bookService.getById(rentDTO.getBookId())))
+                .user(userRepository.findById(rentDTO.getUserId()).orElseThrow(() -> new EntityNotFoundException(rentDTO.getUserId().toString())))
+                .book(bookRepository.findById(rentDTO.getBookId()).orElseThrow(() -> new EntityNotFoundException(rentDTO.getBookId().toString())))
                 .build();
         return rent;
     }
