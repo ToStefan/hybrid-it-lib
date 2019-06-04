@@ -10,6 +10,7 @@ import org.springframework.stereotype.Component;
 
 import java.io.FileOutputStream;
 import java.io.IOException;
+import java.time.LocalDate;
 import java.time.LocalDateTime;
 import java.time.format.DateTimeFormatter;
 import java.util.List;
@@ -21,16 +22,12 @@ public class RentScheduler {
     private final RentServiceImpl rentService;
     private final ObjectMapper objectMapper;
 
-    @Scheduled(cron = "0 0 10 ? * MON,TUE,WED,THU,FRI")
+    @Scheduled(cron = "${app.cronExpression}")
     public void rentOverdueScheduler() throws IOException {
 
         List<RentDTO> overdue = rentService.getOverdueRents(new PageDTO(1, 1));
 
-        LocalDateTime now = LocalDateTime.now();
-        DateTimeFormatter formatter = DateTimeFormatter.ofPattern("dd-MM-yyyy");
-        String dateToday = now.format(formatter);
-
-        String filePath = System.getProperty("user.dir") + "/scheduler/overdue-rents-" + dateToday + ".txt";
+        String filePath = System.getProperty("user.dir") + "/scheduler/overdue-rents-" + LocalDate.now() + ".txt";
         FileOutputStream fos = new FileOutputStream(filePath);
         fos.write(objectMapper.writeValueAsBytes(overdue));
         fos.close();

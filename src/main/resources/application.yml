@@ -11,3 +11,4 @@ spring:
 
 app:
   rentPeriodInDays: 7
+  cronExpression : "0 0 10 ? * MON,TUE,WED,THU,FRI"
