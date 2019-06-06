@@ -1,4 +1,4 @@
-CREATE VIEW most_rented_view AS SELECT books.id as id, books.author as author, books.title as title, COUNT(books.id) as rented_count FROM rents JOIN books ON rents.book_id = books.id GROUP BY books.id ORDER BY books.id DESC;
+CREATE OR REPLACE VIEW most_rented_view AS SELECT books.id as id, books.author as author, books.title as title, COUNT(books.id) as rented_count FROM rents JOIN books ON rents.book_id = books.id GROUP BY books.id ORDER BY books.id DESC;
 
 INSERT INTO USERS(id, username, password, firstname, lastname) VALUES(1, 's', '$2a$10$qzTe6SMMLC29LXs3mTCE.uUAgWm4qmkhu4sOcjdy4IrevomZHpMMq', 'Stefan', 'Tofilovic');
 INSERT INTO USERS(id, username, password, firstname, lastname) VALUES(2, 'v', '$2a$10$LcQfIdi0rTz0/YheLBPpKOQ77bj77P2EMWy9O1F6lJa0vM1eg7qXW', 'Viktor', 'Nikolic');
