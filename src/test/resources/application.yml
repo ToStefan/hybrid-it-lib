@@ -7,6 +7,6 @@ spring:
     database-platform: org.hibernate.dialect.H2Dialect
     hibernate:
       ddl-auto: none
-  h2:
-    console:
-      enabled: true
+app:
+  rentPeriodInDays: 7
+  cronExpression : "0 0 10 ? * MON,TUE,WED,THU,FRI"
